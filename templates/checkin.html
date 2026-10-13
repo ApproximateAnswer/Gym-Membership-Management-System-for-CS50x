@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block main %}
+<div class="card p-4 shadow-sm mx-auto" style="max-width: 700px;">
+    <h4>Gate Verification Check-In</h4>
+    <form action="/checkin" method="get" class="d-flex gap-2 my-3">
+        <input class="form-control" name="q" value="{{ query if query else '' }}" placeholder="Search by name or email..." type="text">
+        <button class="btn btn-dark" type="submit">Search</button>
+    </form>
+
+    {% if query %}
+        <h6>Search Results:</h6>
+        <ul class="list-group">
+            {% for row in results %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ row.first_name }} {{ row.last_name }}</strong> <br>
+                    <small class="text-muted">{{ row.email }}</small>
+                </div>
+                <form action="/checkin?q={{ query }}" method="post">
+                    <input type="hidden" name="member_id" value="{{ row.id }}">
+                    <button class="btn btn-success btn-sm" type="submit">Verify & Check-In</button>
+                </form>
+            </li>
+            {% else %}
+            <li class="list-group-item text-muted">No members match your criteria.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}

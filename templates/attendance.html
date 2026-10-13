@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block main %}
+<div class="card p-4 shadow-sm">
+    <h4>Check-In Log History</h4>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Member Name</th>
+                <th>Email Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.check_in_time }}</td>
+                <td><strong>{{ log.first_name }} {{ log.last_name }}</strong></td>
+                <td>{{ log.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

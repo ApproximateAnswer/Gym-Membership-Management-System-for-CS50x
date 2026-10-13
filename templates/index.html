@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block main %}
+<div class="p-5 mb-4 bg-dark text-white rounded-3">
+    <div class="container-fluid py-2">
+        <h1 class="display-5 fw-bold font-monospace text-warning">Dashboard Metrics</h1>
+        <p class="col-md-8 fs-4 text-secondary">Status tracking operations overview.</p>
+    </div>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-4 mb-3">
+        <div class="card bg-white border-0 shadow-sm p-4">
+            <h6 class="text-uppercase text-muted">Active Subscriptions</h6>
+            <h2 class="display-6 fw-bold text-success">{{ active_members }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card bg-white border-0 shadow-sm p-4">
+            <h6 class="text-uppercase text-muted">Total Gross Earnings</h6>
+            <h2 class="display-6 fw-bold text-dark">${{ "{:,.2f}".format(total_revenue) }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card bg-white border-0 shadow-sm p-4">
+            <h6 class="text-uppercase text-muted">Entries Logged Today</h6>
+            <h2 class="display-6 fw-bold text-primary">{{ today_attendance }}</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}

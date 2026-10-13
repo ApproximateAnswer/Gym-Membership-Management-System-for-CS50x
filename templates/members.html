@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block main %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card p-4 shadow-sm mb-4">
+            <h5>Add New Member</h5>
+            <hr>
+            <form action="/members" method="post">
+                <div class="mb-2"><input class="form-control form-control-sm" name="first_name" placeholder="First Name" type="text" required></div>
+                <div class="mb-2"><input class="form-control form-control-sm" name="last_name" placeholder="Last Name" type="text" required></div>
+                <div class="mb-2"><input class="form-control form-control-sm" name="email" placeholder="Email Address" type="email" required></div>
+                <div class="mb-3"><input class="form-control form-control-sm" name="phone" placeholder="Phone" type="text" required></div>
+                <button class="btn btn-dark btn-sm w-100" type="submit">Save Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card p-4 shadow-sm">
+            <h5>Members Registry</h5>
+            <table class="table table-sm table-hover align-middle mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email/Phone</th>
+                        <th>Status/Ends</th>
+                        <th>Renew Package</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                    <tr>
+                        <td>{{ member.id }}</td>
+                        <td><strong>{{ member.first_name }} {{ member.last_name }}</strong></td>
+                        <td><small>{{ member.email }}<br>{{ member.phone }}</small></td>
+                        <td>
+                            <span class="badge {% if member.status == 'Active' %}bg-success{% else %}bg-danger{% endif %}">{{ member.status }}</span>
+                            <br><small class="text-muted">{{ member.end_date if member.end_date else 'No Tier Attached' }}</small>
+                        </td>
+                        <td>
+                            <form action="/subscribe" method="post" class="row g-1">
+                                <input type="hidden" name="member_id" value="{{ member.id }}">
+                                <div class="col-12">
+                                    <select name="plan_name" class="form-select form-select-sm" required>
+                                        <option value="Monthly">Monthly ($50)</option>
+                                        <option value="Annual">Annual ($500)</option>
+                                    </select>
+                                </div>
+                                <div class="col-6"><input type="date" name="start_date" class="form-control form-control-sm" required></div>
+                                <div class="col-6"><input type="date" name="end_date" class="form-control form-control-sm" required></div>
+                                <div class="col-12"><button type="submit" class="btn btn-warning btn-xs w-100 py-0" style="font-size:0.75rem;">Apply</button></div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
